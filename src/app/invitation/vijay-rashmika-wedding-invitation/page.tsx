@@ -4,8 +4,6 @@ import React, { useEffect } from 'react';
 export default function TemplatePage() {
 
   useEffect(() => {
-    require('@/app/globals.css');
-    
     const entry = document.querySelector('.km-entry');
     const cta = document.querySelector('.km-entry__cta');
     const bell = document.querySelector('.km-bell');

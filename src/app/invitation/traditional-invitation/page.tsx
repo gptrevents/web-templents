@@ -4,8 +4,6 @@ import React, { useEffect } from 'react';
 export default function TemplatePage() {
 
   useEffect(() => {
-    require('@/app/globals.css');
-    
     const overlay = document.querySelector('.si-envelope-overlay');
     const cta = document.querySelector('.si-envelope__cta');
     const musicBtn = document.querySelector('.si-music-btn');
