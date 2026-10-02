@@ -1,0 +1,61 @@
+/* Teatro - The Digital Yes 1:1 Exact Clone Styles */
+
+@layer utilities {
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .font-script {
+    font-family: 'Great Vibes', cursive;
+  }
+  .font-body {
+    font-family: 'Lora', serif;
+  }
+}
+
+.teatro-root {
+  background-color: #FFFFFF;
+  color: #5C2018;
+  font-family: 'Lora', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+.teatro-root section {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Scallop border shape matching the exact polygon from The Digital Yes */
+.teatro-scallop-card {
+  clip-path: polygon(
+    0% 4%, 4% 0%, 8% 4%, 15% 0%, 22% 4%, 29% 0%, 36% 4%, 43% 0%, 50% 4%,
+    57% 0%, 64% 4%, 71% 0%, 78% 4%, 85% 0%, 92% 4%, 96% 0%, 100% 4%,
+    98% 15%, 100% 22%, 98% 29%, 100% 36%, 98% 43%, 100% 50%, 98% 57%, 100% 64%, 98% 71%, 100% 78%, 98% 85%, 100% 92%,
+    96% 100%, 92% 96%, 85% 100%, 78% 96%, 71% 100%, 64% 96%, 57% 100%, 50% 96%,
+    43% 100%, 36% 96%, 29% 100%, 22% 96%, 15% 100%, 8% 96%, 4% 100%, 0% 96%,
+    2% 85%, 0% 78%, 2% 71%, 0% 64%, 2% 57%, 0% 50%, 2% 43%, 0% 36%, 2% 29%, 0% 22%, 2% 15%
+  );
+}
+
+.teatro-scallop-inner {
+  clip-path: polygon(
+    0% 4%, 4% 0%, 8% 4%, 15% 0%, 22% 4%, 29% 0%, 36% 4%, 43% 0%, 50% 4%,
+    57% 0%, 64% 4%, 71% 0%, 78% 4%, 85% 0%, 92% 4%, 96% 0%, 100% 4%,
+    98% 15%, 100% 22%, 98% 29%, 100% 36%, 98% 43%, 100% 50%, 98% 57%, 100% 64%, 98% 71%, 100% 78%, 98% 85%, 100% 92%,
+    96% 100%, 92% 96%, 85% 100%, 78% 96%, 71% 100%, 64% 96%, 57% 100%, 50% 96%,
+    43% 100%, 36% 96%, 29% 100%, 22% 96%, 15% 100%, 8% 96%, 4% 100%, 0% 96%,
+    2% 85%, 0% 78%, 2% 71%, 0% 64%, 2% 57%, 0% 50%, 2% 43%, 0% 36%, 2% 29%, 0% 22%, 2% 15%
+  );
+}
+
+/* Gold scratch card circle pulse */
+@keyframes teatro-pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+
+.teatro-ring-pulse {
+  animation: teatro-pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
