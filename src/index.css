@@ -90,6 +90,9 @@
 html {
   scroll-padding-top: 72px;
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Official Lenis Smooth Scroll Configuration */
@@ -122,6 +125,23 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  touch-action: pan-y;
+}
+
+/* 🧈 HARDWARE GPU ACCELERATION FOR BUTTER SMOOTH SCROLL */
+.kalyana-mandapam,
+.south-indian-wedding,
+.km-hero,
+.km-couple,
+.km-events,
+.km-gallery,
+.km-video,
+.km-rsvp,
+.km-footer {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* ==========================================================================

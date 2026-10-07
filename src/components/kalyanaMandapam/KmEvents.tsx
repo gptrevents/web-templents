@@ -1,13 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MapPin } from 'lucide-react';
+import { MapPin, CalendarPlus } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export interface WeddingEventItem {
   id: string;
   name: string;
+  teluguName?: string;
   date: string;
   time: string;
   venue: string;
@@ -19,15 +20,18 @@ export interface WeddingEventItem {
 
 interface KmEventsProps {
   events?: WeddingEventItem[];
+  heading?: string;
+  subheading?: string;
 }
 
 const DEFAULT_EVENTS: WeddingEventItem[] = [
   {
     id: 'haldi',
     name: 'Mangala Snanam & Haldi',
+    teluguName: 'మంగళ స్నానాలు & పసుపు వేడుక',
     date: '21 April 2026',
     time: '09:00 AM Onwards',
-    venue: 'Sipligunj Residence, Jubilee Hills',
+    venue: 'Family Residence, Jubilee Hills',
     city: 'Hyderabad',
     mapUrl: 'https://maps.google.com/?q=Jubilee+Hills+Hyderabad',
     dressCode: 'Traditional Yellow & Festive Pattu',
@@ -36,6 +40,7 @@ const DEFAULT_EVENTS: WeddingEventItem[] = [
   {
     id: 'sangeet',
     name: 'Sangeet & Mehendi Night',
+    teluguName: 'గోరింటాకు & సంగీత్ రాత్రి',
     date: '22 April 2026',
     time: '06:30 PM Onwards',
     venue: 'Taj Falaknuma Palace Gardens',
@@ -47,6 +52,7 @@ const DEFAULT_EVENTS: WeddingEventItem[] = [
   {
     id: 'muhurtham',
     name: 'Kalyana Mahotsavam',
+    teluguName: 'కళ్యాణ మహోత్సవం (సుముహూర్తం)',
     date: '23 April 2026',
     time: 'Subhamuhurtham 09:30 AM',
     venue: 'Sri Venkateswara Kalyana Mandapam',
@@ -58,12 +64,13 @@ const DEFAULT_EVENTS: WeddingEventItem[] = [
   {
     id: 'reception',
     name: 'Grand Reception',
+    teluguName: 'వివాహ విందు మహోత్సవం',
     date: '23 April 2026',
     time: '07:00 PM Onwards',
     venue: 'The Grand Ballroom, ITC Kohenur',
     city: 'HITEC City, Hyderabad',
     mapUrl: 'https://maps.google.com/?q=ITC+Kohenur+Hyderabad',
-    dressCode: 'Black Tie & Elegant Ethnic',
+    dressCode: 'Royal Ethnic & Traditional Silk',
     icon: '/assets/kalyana-mandapam/events/reception-sofa.png',
   },
 ];
@@ -96,7 +103,11 @@ const FEET = [
   { x: 275, y: 980, rot: -5, isLeft: false },
 ];
 
-export const KmEvents: React.FC<KmEventsProps> = ({ events = DEFAULT_EVENTS }) => {
+export const KmEvents: React.FC<KmEventsProps> = ({
+  events = DEFAULT_EVENTS,
+  heading = 'కళ్యాణ యాత్ర • Sacred Events',
+  subheading = 'వివాహ వేడుకల పవిత్ర ప్రయాణం & శుభ సందర్భాలు',
+}) => {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -119,83 +130,91 @@ export const KmEvents: React.FC<KmEventsProps> = ({ events = DEFAULT_EVENTS }) =
 
       // Stops reveal
       gsap.utils.toArray<HTMLElement>('.km-events__stop').forEach((stop) => {
-        gsap.from(stop, {
-          scrollTrigger: {
-            trigger: stop,
-            start: 'top 85%',
-          },
-          y: 30,
-          scale: 0.94,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-        });
+        const card = stop.querySelector('.km-events__card');
+        const med = stop.querySelector('.km-events__medallion');
+
+        if (card) {
+          gsap.from(card, {
+            scrollTrigger: {
+              trigger: stop,
+              start: 'top 85%',
+            },
+            y: 30,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.9,
+            ease: 'power3.out',
+          });
+        }
+
+        if (med) {
+          gsap.from(med, {
+            scrollTrigger: {
+              trigger: stop,
+              start: 'top 85%',
+            },
+            scale: 0,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'back.out(2)',
+          });
+        }
       });
 
-      // Sacred Footsteps landing animation
-      gsap.utils.toArray<HTMLElement>('.km-events__foot').forEach((foot) => {
-        gsap.fromTo(
-          foot,
-          { opacity: 0, scale: 0.7, rotate: '-=12' },
-          {
-            scrollTrigger: {
-              trigger: foot,
-              start: 'top 88%',
-            },
-            opacity: 0.85,
-            scale: 1,
-            rotate: '+=12',
-            duration: 0.5,
-            ease: 'power2.out',
-          }
-        );
-      });
+      // Footsteps scrub illumination along the sacred path
+      const footElements = gsap.utils.toArray<HTMLElement>('.km-events__foot');
+      if (stageRef.current && footElements.length > 0) {
+        gsap.to(footElements, {
+          opacity: 1,
+          scale: 1.05,
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: stageRef.current,
+            start: 'top 70%',
+            end: 'bottom 85%',
+            scrub: 1.2,
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  const handleCalendarClick = (evt: WeddingEventItem) => {
+    const title = encodeURIComponent(evt.teluguName ? `${evt.name} (${evt.teluguName})` : evt.name);
+    const details = encodeURIComponent(`Wedding Event: ${evt.name}\nAttire: ${evt.dressCode || 'Traditional'}\nVenue: ${evt.venue}, ${evt.city}`);
+    const location = encodeURIComponent(`${evt.venue}, ${evt.city}`);
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <section className="km-events km-section" ref={sectionRef}>
-      {/* Traditional Ornate Frame */}
-      <div className="km-frame" aria-hidden="true">
-        <div className="km-frame-rail km-frame-rail--top" />
-        <div className="km-frame-rail km-frame-rail--bottom" />
-        <div className="km-frame-rail km-frame-rail--left" />
-        <div className="km-frame-rail km-frame-rail--right" />
-        <div className="km-frame-corner km-frame-corner--tl" />
-        <div className="km-frame-corner km-frame-corner--tr" />
-        <div className="km-frame-corner km-frame-corner--bl" />
-        <div className="km-frame-corner km-frame-corner--br" />
-      </div>
-
-      <div className="km-container">
-        <h2 className="km-events__heading km-font-heading">Kalyana Vaibhavam</h2>
-        <p className="km-events__sub km-font-serif">
-          The sacred ceremonies celebrating our eternal union
+      <div className="km-container text-center">
+        <h2 className="km-events__heading km-font-heading text-[#9A1B41] font-bold">
+          {heading}
+        </h2>
+        <p className="km-events__sub km-font-serif text-stone-700 font-medium">
+          {subheading}
         </p>
 
-        {/* Sacred Pilgrimage Yatra Stage */}
-        <div
-          ref={stageRef}
-          className="km-events__stage"
-          style={{ aspectRatio: '400 / 1083' }}
-        >
-          {/* Kolam Pattern Wall Background */}
-          <div className="km-events__kolam" aria-hidden="true" />
-
-          {/* S-Curve Path SVG */}
+        {/* Footsteps Stage */}
+        <div className="km-events__stage" ref={stageRef}>
+          {/* Path SVG */}
           <svg
             className="km-events__path"
             viewBox="0 0 400 1083"
-            fill="none"
+            preserveAspectRatio="none"
             aria-hidden="true"
           >
             <path
-              d="M 200 40 C 120 120, 110 200, 120 250 C 135 320, 280 340, 280 440 C 280 540, 120 570, 120 670 C 120 770, 280 810, 280 910 C 280 980, 230 1030, 200 1060"
-              stroke="rgba(201, 169, 78, 0.45)"
+              d="M 200 40 C 130 180, 110 320, 200 420 C 290 520, 280 660, 180 760 C 100 840, 220 980, 200 1040"
+              fill="none"
+              stroke="#e3c280"
               strokeWidth="2.5"
-              strokeDasharray="5 7"
+              strokeDasharray="6 8"
+              opacity="0.6"
             />
           </svg>
 
@@ -208,6 +227,7 @@ export const KmEvents: React.FC<KmEventsProps> = ({ events = DEFAULT_EVENTS }) =
                 left: `${(f.x / 400) * 100}%`,
                 top: `${(f.y / 1083) * 100}%`,
                 transform: `translate(-50%, -50%) rotate(${f.rot}deg)`,
+                opacity: 0.18,
               }}
             >
               <img
@@ -225,7 +245,6 @@ export const KmEvents: React.FC<KmEventsProps> = ({ events = DEFAULT_EVENTS }) =
           {/* Event Stops */}
           {events.map((evt, idx) => {
             const stop = STOPS[idx % STOPS.length];
-            const isLeft = stop.side === 'left';
 
             return (
               <div
@@ -234,37 +253,60 @@ export const KmEvents: React.FC<KmEventsProps> = ({ events = DEFAULT_EVENTS }) =
                 style={{ top: `${stop.top}%` }}
               >
                 {/* Event Card */}
-                <div className="km-events__card">
+                <div className="km-events__card shadow-md hover:shadow-xl transition-all duration-300">
                   <div className="km-events__card-head">
-                    <h3 className="km-events__name km-font-script">{evt.name}</h3>
+                    <h3 className="km-events__name km-font-script text-[#9A1B41] font-bold">
+                      {evt.name}
+                    </h3>
+                    {evt.teluguName && (
+                      <span className="text-[11px] font-serif font-semibold text-[#8B5A2B] block -mt-1 mb-1">
+                        {evt.teluguName}
+                      </span>
+                    )}
                   </div>
 
-                  <p className="km-events__when km-font-label">
+                  <p className="km-events__when km-font-label text-stone-800 font-bold">
                     {evt.date} • {evt.time}
                   </p>
 
-                  <p className="km-events__venue km-font-serif">
+                  <p className="km-events__venue km-font-serif text-stone-700">
                     {evt.venue}, {evt.city}
                   </p>
 
                   {evt.dressCode && (
-                    <p className="km-events__dress km-font-label">
-                      Attire: {evt.dressCode}
+                    <p className="km-events__dress km-font-label text-[#8B5A2B] bg-[#FFF2D6] px-2 py-0.5 rounded-full inline-block my-1 text-[10px]">
+                      డ్రెస్ కోడ్: {evt.dressCode}
                     </p>
                   )}
 
-                  {evt.mapUrl && (
-                    <a
-                      href={evt.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="km-events__map km-font-label"
-                      onClick={(e) => e.stopPropagation()}
+                  {/* Action Buttons: Google Maps & Add to Calendar */}
+                  <div className="flex flex-wrap items-center gap-2 mt-2 pt-2 border-t border-[#D4A843]/30">
+                    {evt.mapUrl && (
+                      <a
+                        href={evt.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2.5 py-1 rounded-md bg-[#FFF9ED] border border-[#D4A843]/60 text-xs text-[#8B1A1A] font-serif font-semibold hover:bg-[#FBEEC1] transition-colors inline-flex items-center gap-1"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <MapPin className="w-3 h-3 text-[#D4A843]" />
+                        <span>దిశలు (Map)</span>
+                      </a>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCalendarClick(evt);
+                      }}
+                      className="px-2.5 py-1 rounded-md bg-[#FFF9ED] border border-[#D4A843]/60 text-xs text-[#8B1A1A] font-serif font-semibold hover:bg-[#FBEEC1] transition-colors inline-flex items-center gap-1 cursor-pointer"
+                      title="Add event to Google Calendar"
                     >
-                      <MapPin className="w-3.5 h-3.5 mr-1 inline" />
-                      <span>View on Google Maps</span>
-                    </a>
-                  )}
+                      <CalendarPlus className="w-3 h-3 text-[#D4A843]" />
+                      <span>క్యాలెండర్</span>
+                    </button>
+                  </div>
                 </div>
 
                 {/* Medallion Icon on the Sacred Path */}

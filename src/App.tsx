@@ -42,18 +42,28 @@ export default function App() {
   });
 
   // Invitation data (pre-filled with standard couple details)
-  const [customData] = useState<CustomInvitationData>(() => {
-    const guestParam = urlParams.get('to') || 'బంధుమిత్రులు (Guest)';
+  const [customData, setCustomData] = useState<CustomInvitationData>(() => {
+    const guestParam = urlParams.get('to') || 'బంధుమిత్రులు (Dear Guest)';
     return {
       templateId: selectedTemplateId,
       groom: 'రాహుల్ (Rahul)',
       bride: 'హరిణ్య (Harinya)',
-      date: '12 DEC 2026',
+      date: '23 APRIL 2026',
       time: '09:30 AM',
-      venue: 'శ్రీ కన్వెన్షన్ హాల్, ఎం.జి. రోడ్',
-      city: 'హైదరాబాద్ / విజయవాడ',
+      venue: 'శ్రీ వెంకటేశ్వర కళ్యాణ మండపం, ఎం.జి. రోడ్',
+      city: 'హైదరాబాద్ (Hyderabad)',
       guestName: guestParam,
       customMessage: 'మనసైన బంధం.. కలకాలం నిలిచే శుభవేళ.. మీ ఆశీస్సులే మాకు శ్రీరామరక్ష!',
+      groomFullName: 'రాహుల్ సిప్లిగంజ్ (Rahul Sipligunj)',
+      brideFullName: 'హరిణ్య రెడ్డి (Harinya Reddy)',
+      groomGotram: 'భరద్వాజసస గోత్రం (Bharadwaja Gotram)',
+      brideGotram: 'కశ్యపసస గోత్రం (Kasyapa Gotram)',
+      groomParents: 'శ్రీ శంకర్ సిప్లిగంజ్ & శ్రీమతి లక్ష్మి సిప్లిగంజ్',
+      brideParents: 'శ్రీ రమేష్ రెడ్డి & శ్రీమతి లక్ష్మి రెడ్డి',
+      muhurthamTime: 'సుముహూర్తం: ఉదయం 09:30 AM',
+      targetDate: '2026-04-23T09:30:00',
+      upiId: 'rahul.harinya@okhdfcbank',
+      whatsappNumber: '919849012345',
     };
   });
 
@@ -89,6 +99,7 @@ export default function App() {
             }
           }}
           customData={customData}
+          onUpdateCustomData={setCustomData}
         />
       ) : (
         <div className="min-h-screen w-full bg-[#FAF9F6] text-stone-900 font-sans flex flex-col justify-between selection:bg-amber-100">

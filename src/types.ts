@@ -81,4 +81,20 @@ export interface CustomInvitationData {
   guestName: string;
   customMessage: string;
   upiId?: string;
+  // Extended fields for rich cultural templates
+  groomFullName?: string;
+  brideFullName?: string;
+  groomGotram?: string;
+  brideGotram?: string;
+  groomParents?: string;
+  brideParents?: string;
+  muhurthamTime?: string;
+  targetDate?: string;
+  whatsappNumber?: string;
+  youtubeId?: string;
+  groomPhoto?: string;
+  bridePhoto?: string;
+  musicUrl?: string;
+  lang?: 'te' | 'en';
 }
+

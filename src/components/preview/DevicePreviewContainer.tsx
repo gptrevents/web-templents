@@ -38,6 +38,7 @@ interface DevicePreviewContainerProps {
   onSelectTemplate: (id: TemplateId) => void;
   onBackToStore: () => void;
   customData: CustomInvitationData;
+  onUpdateCustomData?: (data: CustomInvitationData) => void;
 }
 
 export const DevicePreviewContainer: React.FC<DevicePreviewContainerProps> = ({
@@ -45,6 +46,7 @@ export const DevicePreviewContainer: React.FC<DevicePreviewContainerProps> = ({
   onSelectTemplate,
   onBackToStore,
   customData,
+  onUpdateCustomData,
 }) => {
   // Traditional envelope state & music
   const [isTraditionalEnvelopeOpen, setIsTraditionalEnvelopeOpen] = useState(false);
@@ -193,7 +195,10 @@ export const DevicePreviewContainer: React.FC<DevicePreviewContainerProps> = ({
           />
         ) : templateId === 'kalyana-mandapam' ? (
           /* TEMPLATE 4: KALYANA MANDAPAM (VIJAY & RASHMIKA WEDDING THEME - 1:1 EXACT CLONE) */
-          <KalyanaMandapamView customData={customData} />
+          <KalyanaMandapamView
+            customData={customData}
+            onUpdateCustomData={onUpdateCustomData}
+          />
         ) : templateId === 'teatro' ? (
           /* TEMPLATE 5: TEATRO (THE DIGITAL YES 1:1 EXACT CLONE) */
           <TeatroView customData={customData} />

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Calendar, Clock, MapPin } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ interface KmHeroProps {
   venueCity?: string;
   muhurthamTime?: string;
   isOpen?: boolean;
+  lang?: 'te' | 'en';
 }
 
 export const KmHero: React.FC<KmHeroProps> = ({
@@ -18,8 +20,9 @@ export const KmHero: React.FC<KmHeroProps> = ({
   brideName = 'Harinya',
   weddingDate = '23 April 2026',
   venueCity = 'Hyderabad',
-  muhurthamTime = 'Subhamuhurtham 09:30 AM',
+  muhurthamTime = 'సుముహూర్తం: ఉదయం 09:30 AM',
   isOpen = true,
+  lang = 'te',
 }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -76,19 +79,22 @@ export const KmHero: React.FC<KmHeroProps> = ({
           '-=0.15'
         )
         .from(
-          '.km-hero__date',
+          '.km-hero__badge',
           {
-            y: 10,
+            y: 15,
             opacity: 0,
+            scale: 0.9,
             duration: 0.5,
           },
           '-=0.2'
         )
         .from(
-          '.km-hero__venue',
+          '.km-hero__date, .km-hero__venue',
           {
             opacity: 0,
+            y: 10,
             duration: 0.6,
+            stagger: 0.1,
           },
           '-=0.1'
         );
@@ -108,7 +114,7 @@ export const KmHero: React.FC<KmHeroProps> = ({
 
       gsap.to('.km-hero__content', {
         yPercent: -18,
-        opacity: 0.4,
+        opacity: 0.35,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: '20% top',
@@ -156,26 +162,48 @@ export const KmHero: React.FC<KmHeroProps> = ({
       />
       <div className="km-hero__scrim" />
 
-      <div className="km-hero__content km-container">
-        <p className="km-hero__invocation km-font-serif">
-          || Shree Ganeshay Namah ||
-        </p>
+      <div className="km-hero__content km-container flex flex-col items-center text-center">
+        {/* Sacred Telugu Invocation Banner */}
+        <div className="km-hero__invocation flex flex-col items-center mb-2">
+          <p className="text-[#FFD700] text-xs sm:text-sm font-serif tracking-[0.25em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] font-semibold">
+            || శ్రీరస్తు • శుభమస్తు • అవిఘ్నమస్తు ||
+          </p>
+          <span className="text-stone-300 text-[10px] sm:text-xs tracking-widest mt-0.5">
+            || శ్రీ విఘ్నేశ్వరాయ నమః ||
+          </span>
+        </div>
 
-        <h1 className="km-hero__name km-hero__groom km-font-heading">
+        {/* Groom Name */}
+        <h1 className="km-hero__name km-hero__groom km-font-heading text-[#FFF5DB] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
           {renderSplitText(groomName, 'groom')}
         </h1>
 
-        <div className="km-hero__amp km-font-script">&amp;</div>
+        <div className="km-hero__amp km-font-script text-[#E6C670] my-[-6px] sm:my-[-10px]">&amp;</div>
 
-        <h1 className="km-hero__name km-hero__bride km-font-heading">
+        {/* Bride Name */}
+        <h1 className="km-hero__name km-hero__bride km-font-heading text-[#FFF5DB] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
           {renderSplitText(brideName, 'bride')}
         </h1>
 
-        <p className="km-hero__date km-font-label">{weddingDate}</p>
+        {/* Royal Sumuhurtham Gold Badge */}
+        <div className="km-hero__badge my-3 px-4 py-1.5 rounded-full bg-[#3A070D]/85 border border-[#D4A843] backdrop-blur-md inline-flex items-center gap-2 shadow-lg">
+          <Clock className="w-3.5 h-3.5 text-[#FFD700] animate-pulse" />
+          <span className="text-[#FFEDB3] text-xs sm:text-sm font-serif font-bold tracking-wider">
+            {muhurthamTime}
+          </span>
+        </div>
 
-        <div className="km-hero__venue km-font-label">
-          <span className="km-hero__venue-at">at </span>
-          <span>{venueCity}</span>
+        {/* Date and Location with Icons */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-stone-200 mt-1">
+          <div className="km-hero__date km-font-label flex items-center gap-1.5 text-xs sm:text-sm tracking-widest text-[#F5DE9C]">
+            <Calendar className="w-3.5 h-3.5 text-[#D4A843]" />
+            <span>{weddingDate}</span>
+          </div>
+
+          <div className="km-hero__venue km-font-label flex items-center gap-1.5 text-xs sm:text-sm tracking-widest text-stone-300">
+            <MapPin className="w-3.5 h-3.5 text-[#D4A843]" />
+            <span>{venueCity}</span>
+          </div>
         </div>
       </div>
     </section>

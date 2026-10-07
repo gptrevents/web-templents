@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Sparkles, Heart } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,6 +10,8 @@ interface KmCoupleProps {
   brideFullName?: string;
   groomPhoto?: string;
   bridePhoto?: string;
+  groomGotram?: string;
+  brideGotram?: string;
   groomParents?: string;
   brideParents?: string;
   heading?: string;
@@ -18,12 +21,14 @@ interface KmCoupleProps {
 export const KmCouple: React.FC<KmCoupleProps> = ({
   groomFullName = 'Rahul Sipligunj',
   brideFullName = 'Harinya Reddy',
-  groomPhoto = 'https://p7fosjg9fjbplnvq.public.blob.vercel-storage.com/synced-media/92ba0ee8cf-rahulll.jpeg',
-  bridePhoto = 'https://p7fosjg9fjbplnvq.public.blob.vercel-storage.com/synced-media/1982fd6490-hiranya.jpeg',
-  groomParents = 'Shankar Sipligunj & Laxmi Sipligunj',
-  brideParents = 'Ramesh Reddy & Lakshmi Reddy',
-  heading = 'The Couple',
-  subheading = 'Two families, many blessings, one timeless celebration.',
+  groomPhoto = 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80',
+  bridePhoto = 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80',
+  groomGotram = 'భరద్వాజసస గోత్రం (Bharadwaja Gotram)',
+  brideGotram = 'కశ్యపసస గోత్రం (Kasyapa Gotram)',
+  groomParents = 'శ్రీ శంకర్ సిప్లిగంజ్ & శ్రీమతి లక్ష్మి సిప్లిగంజ్',
+  brideParents = 'శ్రీ రమేష్ రెడ్డి & శ్రీమతి లక్ష్మి రెడ్డి',
+  heading = 'వధూవరుల పరిచయం • The Couple',
+  subheading = 'ఇరు కుటుంబాల ఆశీస్సులతో... ఏడడుగుల పవిత్ర బంధం',
 }) => {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -106,19 +111,6 @@ export const KmCouple: React.FC<KmCoupleProps> = ({
           yoyo: true,
           repeat: -1,
         });
-        gsap.fromTo(
-          bird,
-          { opacity: 0 },
-          {
-            keyframes: [
-              { opacity: 0.55, duration: 0.12 * dur },
-              { opacity: 0.55, duration: 0.72 * dur },
-              { opacity: 0, duration: 0.16 * dur },
-            ],
-            repeat: -1,
-            delay: 13 * t,
-          }
-        );
       });
 
       // Glowing halos pulsing
@@ -171,49 +163,33 @@ export const KmCouple: React.FC<KmCoupleProps> = ({
       />
 
       {/* Flying Birds */}
-      <svg
-        className="km-couple__bird km-couple__bird--1"
-        viewBox="0 0 20 7"
-        aria-hidden="true"
-      >
-        <path
-          d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5"
-          fill="none"
-          stroke="#c9ad77"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        />
+      <svg className="km-couple__bird km-couple__bird--1" viewBox="0 0 20 7" aria-hidden="true">
+        <path d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5" fill="none" stroke="#c9ad77" strokeWidth="1.4" strokeLinecap="round" />
       </svg>
-      <svg
-        className="km-couple__bird km-couple__bird--2"
-        viewBox="0 0 20 7"
-        aria-hidden="true"
-      >
-        <path
-          d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5"
-          fill="none"
-          stroke="#c9ad77"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        />
+      <svg className="km-couple__bird km-couple__bird--2" viewBox="0 0 20 7" aria-hidden="true">
+        <path d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5" fill="none" stroke="#c9ad77" strokeWidth="1.4" strokeLinecap="round" />
       </svg>
-      <svg
-        className="km-couple__bird km-couple__bird--3"
-        viewBox="0 0 20 7"
-        aria-hidden="true"
-      >
-        <path
-          d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5"
-          fill="none"
-          stroke="#c9ad77"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        />
+      <svg className="km-couple__bird km-couple__bird--3" viewBox="0 0 20 7" aria-hidden="true">
+        <path d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5" fill="none" stroke="#c9ad77" strokeWidth="1.4" strokeLinecap="round" />
       </svg>
 
-      <div className="km-container km-couple__inner">
-        <h2 className="km-couple__heading km-font-heading">{heading}</h2>
-        <p className="km-couple__sub km-font-serif">{subheading}</p>
+      <div className="km-container km-couple__inner text-center">
+        <h2 className="km-couple__heading km-font-heading text-[#9A1B41] font-bold tracking-wide">
+          {heading}
+        </h2>
+        <p className="km-couple__sub km-font-serif text-stone-700 font-medium">
+          {subheading}
+        </p>
+
+        {/* Sacred Mangalyam Shloka Card */}
+        <div className="max-w-2xl mx-auto my-6 px-4 py-3 rounded-2xl bg-[#FFF9ED]/90 border border-[#D4A843]/50 shadow-xs">
+          <p className="text-xs sm:text-sm font-serif text-[#8B1A1A] font-semibold leading-relaxed tracking-wide">
+            మాంగళ్యం తంతునానేన మమజీవన హేతునా | కంఠే బధ్నామి శుభగే త్వం జీవ శరదాం శతం ||
+          </p>
+          <span className="text-[11px] text-[#A26815] italic mt-0.5 block font-serif">
+            - కలకాలం నిలిచే అనురాగ బంధం • జీవితాంతం తోడుండే సప్తపది -
+          </span>
+        </div>
 
         {/* Groom Unit */}
         <div className="km-couple__unit">
@@ -224,6 +200,10 @@ export const KmCouple: React.FC<KmCoupleProps> = ({
                 className="km-couple__photo"
                 src={groomPhoto}
                 alt={groomFullName}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80';
+                }}
               />
             </div>
             <img
@@ -235,15 +215,20 @@ export const KmCouple: React.FC<KmCoupleProps> = ({
           </div>
 
           <div className="km-couple__meta">
-            <h3 className="km-couple__name km-font-script">{groomFullName}</h3>
-            <p className="km-couple__parent-label km-font-label">Son of</p>
-            <p className="km-couple__parents km-font-serif">{groomParents}</p>
+            <h3 className="km-couple__name km-font-script text-[#9A1B41]">{groomFullName}</h3>
+            {groomGotram && (
+              <span className="inline-block text-[11px] font-serif font-semibold text-[#8B5A2B] bg-[#FFF2D6] px-2.5 py-0.5 rounded-full border border-[#D4A843]/40 mb-1">
+                {groomGotram}
+              </span>
+            )}
+            <p className="km-couple__parent-label km-font-label text-stone-500">కుమారుడు (Son of)</p>
+            <p className="km-couple__parents km-font-serif text-stone-800 font-semibold">{groomParents}</p>
           </div>
         </div>
 
         {/* Ornate Gold Divider */}
         <img
-          className="km-couple__divider"
+          className="km-couple__divider my-8"
           src="/assets/kalyana-mandapam/gold-divider.webp"
           alt=""
           aria-hidden="true"
@@ -258,6 +243,10 @@ export const KmCouple: React.FC<KmCoupleProps> = ({
                 className="km-couple__photo"
                 src={bridePhoto}
                 alt={brideFullName}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80';
+                }}
               />
             </div>
             <img
@@ -269,9 +258,14 @@ export const KmCouple: React.FC<KmCoupleProps> = ({
           </div>
 
           <div className="km-couple__meta">
-            <h3 className="km-couple__name km-font-script">{brideFullName}</h3>
-            <p className="km-couple__parent-label km-font-label">Daughter of</p>
-            <p className="km-couple__parents km-font-serif">{brideParents}</p>
+            <h3 className="km-couple__name km-font-script text-[#9A1B41]">{brideFullName}</h3>
+            {brideGotram && (
+              <span className="inline-block text-[11px] font-serif font-semibold text-[#8B5A2B] bg-[#FFF2D6] px-2.5 py-0.5 rounded-full border border-[#D4A843]/40 mb-1">
+                {brideGotram}
+              </span>
+            )}
+            <p className="km-couple__parent-label km-font-label text-stone-500">కుమార్తె (Daughter of)</p>
+            <p className="km-couple__parents km-font-serif text-stone-800 font-semibold">{brideParents}</p>
           </div>
         </div>
       </div>

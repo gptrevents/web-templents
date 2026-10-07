@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" width="100%" height="100%">
+  <defs>
+    <!-- Outer Flame Glow Gradient -->
+    <radialGradient id="flameGlow" cx="50%" cy="80%" r="60%">
+      <stop offset="0%" stop-color="#FFF2A3" stop-opacity="0.9" />
+      <stop offset="35%" stop-color="#FF9900" stop-opacity="0.8" />
+      <stop offset="70%" stop-color="#FF3300" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#FF0000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Core Flame Gradient -->
+    <linearGradient id="flameCore" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FF4500" />
+      <stop offset="30%" stop-color="#FF8C00" />
+      <stop offset="70%" stop-color="#FFD700" />
+      <stop offset="100%" stop-color="#FFFFF0" />
+    </linearGradient>
+
+    <!-- Inner White Core -->
+    <linearGradient id="flameInner" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.4" />
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="1" />
+    </linearGradient>
+
+    <!-- Soft Blur Filter for realistic fiery glow -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Outer Flame Halo -->
+  <path d="M50 8 C30 50, 18 90, 24 125 C30 150, 70 150, 76 125 C82 90, 70 50, 50 8 Z" 
+        fill="url(#flameGlow)" 
+        opacity="0.75" />
+
+  <!-- Main Teardrop Deepam Flame -->
+  <path d="M50 14 C34 55, 26 88, 30 118 C34 142, 66 142, 70 118 C74 88, 66 55, 50 14 Z" 
+        fill="url(#flameCore)" 
+        filter="url(#softGlow)" />
+
+  <!-- Inner Bright Candle Wick Light -->
+  <path d="M50 35 C42 65, 38 88, 41 108 C44 125, 56 125, 59 108 C62 88, 58 65, 50 35 Z" 
+        fill="url(#flameInner)" />
+</svg>
+
