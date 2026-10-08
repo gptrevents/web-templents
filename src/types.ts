@@ -67,6 +67,9 @@ export interface InvitationTemplate {
     date: string;
     location: string;
   };
+  category?: 'basic' | 'premium';
+  badge?: string;
+  price?: string;
   features: string[];
 }
 

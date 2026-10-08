@@ -16,6 +16,9 @@ export const INVITATION_TEMPLATES: InvitationTemplate[] = [
       date: '10 SEPT 2027',
       location: 'Artimino, Florence, Italy',
     },
+    category: 'premium',
+    badge: '👑 ప్రీమియం',
+    price: '₹3,999',
     features: [
       'రెడ్ వెల్వెట్ కర్టెన్స్ సినిమాటిక్ వీడియో',
       '3 గోల్డ్ స్క్రాచ్ వలయాలు (Scratch Date)',
@@ -39,6 +42,9 @@ export const INVITATION_TEMPLATES: InvitationTemplate[] = [
       date: '23 APRIL 2026',
       location: 'Hyderabad, Telangana',
     },
+    category: 'premium',
+    badge: '👑 ప్రీమియం',
+    price: '₹3,999',
     features: [
       'రాయల్ ఏనుగుల ఊరేగింపు సినిమాటిక్ వీడియో',
       'గోల్డెన్ తాంబూల కవరు యానిమేషన్',
@@ -62,6 +68,9 @@ export const INVITATION_TEMPLATES: InvitationTemplate[] = [
       date: '17 SEP 2026',
       location: 'Hyderabad, Telangana',
     },
+    category: 'premium',
+    badge: '👑 ప్రీమియం',
+    price: '₹3,999',
     features: [
       'గోపురం డీసెంట్ సినిమాటిక్ వీడియో',
       'ఆకాశ దీపాలు & మామిడాకుల తోరణాలు',
@@ -85,6 +94,9 @@ export const INVITATION_TEMPLATES: InvitationTemplate[] = [
       date: '12 DEC 2026',
       location: 'Hyderabad, Telangana',
     },
+    category: 'premium',
+    badge: '👑 ప్రీమియం',
+    price: '₹3,999',
     features: [
       'తాంబూల కవరు ఓపెనింగ్ (Envelope Reveal)',
       'సన్నాయి & మంగళ వాయిద్యాల సంగీతం',
@@ -108,6 +120,9 @@ export const INVITATION_TEMPLATES: InvitationTemplate[] = [
       date: '12 DEC 2026',
       location: 'Vijayawada, Andhra Pradesh',
     },
+    category: 'premium',
+    badge: '👑 ప్రీమియం',
+    price: '₹3,999',
     features: [
       'రొమాంటిక్ వెల్‌కమ్ ఎన్వలప్ & రోజ్ పెటల్ కాన్ఫెట్టీ',
       'మా ప్రేమ ప్రయాణం (2020 - 2026 లవ్ స్టోరీ టైమ్‌లైన్)',
@@ -131,6 +146,9 @@ export const INVITATION_TEMPLATES: InvitationTemplate[] = [
       date: '12 DEC 2026',
       location: 'హైదరాబాద్ (Hyderabad)',
     },
+    category: 'premium',
+    badge: '👑 ప్రీమియం',
+    price: '₹3,999',
     features: [
       'స్ప్లిట్ డెస్క్‌టాప్ & మొబైల్ లేఅవుట్ (Split Screen)',
       'వెల్‌కమ్ కవర్ గేట్ (Open Invitation Animation)',

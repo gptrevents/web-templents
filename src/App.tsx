@@ -77,6 +77,17 @@ export default function App() {
     }
   };
 
+  // Category filter: 'basic' | 'premium'
+  const [selectedCategory, setSelectedCategory] = useState<'basic' | 'premium'>(() => {
+    const cat = urlParams.get('category');
+    if (cat === 'premium') return 'premium';
+    return 'basic';
+  });
+
+  const filteredTemplates = INVITATION_TEMPLATES.filter(
+    (template) => (template.category || 'premium') === selectedCategory
+  );
+
   return (
     <SmoothScrollProvider>
       {viewMode === 'preview' ? (
@@ -120,7 +131,7 @@ export default function App() {
                 </div>
               </div>
               <span className="text-xs text-stone-500 font-medium">
-                {INVITATION_TEMPLATES.length} Templates
+                {INVITATION_TEMPLATES.length} Templates Total
               </span>
             </div>
           </header>
@@ -128,48 +139,122 @@ export default function App() {
           {/* Clean Main Content */}
           <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 py-10 sm:py-14">
             {/* Simple Heading */}
-            <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
+            <div className="text-center max-w-xl mx-auto mb-8">
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 tracking-tight mb-2">
                 వివాహ ఆహ్వానాలు
               </h2>
               <p className="text-sm text-stone-500">
-                మీకు నచ్చిన ఆహ్వానాన్ని ఎంచుకోండి • Click to open
+                మీకు నచ్చిన ఆహ్వానాన్ని ఎంచుకోండి • Choose your template
               </p>
             </div>
 
-            {/* Simple Clean Grid: Image & Name */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {INVITATION_TEMPLATES.map((template) => (
-                <div
-                  key={template.id}
-                  onClick={() => handleOpenTemplate(template.id)}
-                  className="group bg-white rounded-2xl border border-stone-200/90 shadow-2xs hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col hover:-translate-y-1"
+            {/* 🏷️ Basic / Premium Category Tabs */}
+            <div className="flex justify-center mb-10">
+              <div className="inline-flex p-1.5 bg-stone-200/70 rounded-2xl border border-stone-300/60 shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategory('basic')}
+                  className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 cursor-pointer ${
+                    selectedCategory === 'basic'
+                      ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
                 >
-                  {/* Template Image */}
-                  <div className="relative aspect-[16/11] w-full overflow-hidden bg-stone-100">
-                    <img
-                      src={template.heroImage}
-                      alt={template.name}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                  <span>✨ బేసిక్ (Basic)</span>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full ${
+                      selectedCategory === 'basic'
+                        ? 'bg-amber-100 text-amber-900 font-bold'
+                        : 'bg-stone-300/60 text-stone-600'
+                    }`}
+                  >
+                    {INVITATION_TEMPLATES.filter((t) => t.category === 'basic').length}
+                  </span>
+                </button>
 
-                  {/* Template Name Below */}
-                  <div className="p-4 sm:p-5 flex items-center justify-between gap-3 bg-white">
-                    <div>
-                      <h3 className="font-serif font-bold text-base text-stone-900 group-hover:text-amber-800 transition-colors">
-                        {template.teluguName}
-                      </h3>
-                      <p className="text-xs text-stone-500 mt-0.5">
-                        {template.name}
-                      </p>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all shrink-0" />
-                  </div>
-                </div>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategory('premium')}
+                  className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 cursor-pointer ${
+                    selectedCategory === 'premium'
+                      ? 'bg-white text-stone-900 shadow-sm font-semibold'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  <span>👑 ప్రీమియం (Premium)</span>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full ${
+                      selectedCategory === 'premium'
+                        ? 'bg-amber-100 text-amber-900 font-bold'
+                        : 'bg-stone-300/60 text-stone-600'
+                    }`}
+                  >
+                    {INVITATION_TEMPLATES.filter((t) => (t.category || 'premium') === 'premium').length}
+                  </span>
+                </button>
+              </div>
             </div>
+
+            {/* Template Grid or Empty Placeholder */}
+            {filteredTemplates.length === 0 ? (
+              <div className="text-center py-16 px-6 bg-white rounded-3xl border border-dashed border-stone-300 max-w-lg mx-auto shadow-xs">
+                <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center mx-auto mb-4 text-3xl shadow-xs">
+                  ✨
+                </div>
+                <h3 className="font-serif font-bold text-xl text-stone-900 mb-2">
+                  బేసిక్ టెంప్లేట్లు సిద్ధమవుతున్నాయి
+                </h3>
+                <p className="text-sm text-stone-500 leading-relaxed max-w-sm mx-auto mb-4">
+                  వేగవంతమైన, సరళమైన మరియు అందమైన బేసిక్ వివాహ ఆహ్వానాలు ఇక్కడ రాబోతున్నాయి!
+                </p>
+                <span className="inline-block px-3 py-1 bg-amber-100 text-amber-900 text-xs rounded-full font-medium">
+                  Ready for Basic Templates Plan
+                </span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {filteredTemplates.map((template) => (
+                  <div
+                    key={template.id}
+                    onClick={() => handleOpenTemplate(template.id)}
+                    className="group bg-white rounded-2xl border border-stone-200/90 shadow-2xs hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col hover:-translate-y-1"
+                  >
+                    {/* Template Image */}
+                    <div className="relative aspect-[16/11] w-full overflow-hidden bg-stone-100">
+                      <img
+                        src={template.heroImage}
+                        alt={template.name}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {template.badge && (
+                        <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-semibold bg-stone-900/85 backdrop-blur-md text-amber-300 border border-amber-500/30 shadow-md">
+                          {template.badge}
+                        </div>
+                      )}
+                      {template.price && (
+                        <div className="absolute bottom-3 left-3 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-white/95 backdrop-blur-md text-stone-800 shadow-xs border border-stone-200">
+                          {template.price}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Template Name Below */}
+                    <div className="p-4 sm:p-5 flex items-center justify-between gap-3 bg-white">
+                      <div>
+                        <h3 className="font-serif font-bold text-base text-stone-900 group-hover:text-amber-800 transition-colors">
+                          {template.teluguName}
+                        </h3>
+                        <p className="text-xs text-stone-500 mt-0.5">
+                          {template.name}
+                        </p>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all shrink-0" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </main>
 
           {/* Simple Clean Footer */}
